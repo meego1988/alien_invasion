@@ -16,16 +16,19 @@ class Ship:
         self.moving_right = False
         # 设置飞船向左移动的标志位
         self.moving_left = False
-        # 设置飞船移动速度
-        self.speed = 5
+        # 引入主游戏的settings类
+        self.settings = ai_game.settings
+        # 因为rect.x只能是int，所以设置一个x属性和ship_speed相加减
+        self.x = float(self.rect.x)
 
     def update(self):
         """更新飞船位置"""
         if self.moving_right:
-            self.rect.x += self.speed
+            self.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= self.speed
-
+            self.x -= self.settings.ship_speed
+        # rect.x只接收浮点数的整数部分
+        self.rect.x = self.x
     def blitme(self):
         """在指定位置绘制飞船"""
         self.screen.blit(self.image, self.rect)
