@@ -31,16 +31,19 @@ class AlienInvasion:
             self._check_events()
             # 更新飞船位置
             self.ship.update()
-            # 更新子弹精灵组中子弹位置
-            self.bullets.update()
-            # 删除已经飞出屏幕的子弹
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
+            # 更新子弹精灵组中子弹位置并删除飞出屏幕的子弹
+            self._update_bullets()
             # 刷新屏幕
             self._update_screen()
             # 设置刷新率
             self.clock.tick(60)
+
+    def _update_bullets(self):
+        """更新精灵组中精灵位置并删除飞出屏幕的子弹"""
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom < 0:
+                self.bullets.remove(bullet)
 
     def _check_events(self):
         """响应鼠标和键盘事件"""
@@ -65,8 +68,9 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         """创建子弹实例并加入子弹精灵组"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullet_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
     def _check_keyup_events(self, event):
         """用辅助方法重构_check_events()方法"""
