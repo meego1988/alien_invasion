@@ -7,3 +7,9 @@ class Settings:
         self.bg_color = (230, 230, 230)
         # 设置飞船的移动速度
         self.ship_speed = 1.5
+
+        # 子弹参数设置
+        self.bullet_speed = 2.0
+        self.bullet_width = 3
+        self.bullet_height = 15
+        self.bullet_color = (60, 60, 60)
