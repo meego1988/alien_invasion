@@ -17,3 +17,6 @@ class Settings:
 
         # 外星人参数设置
         self.alien_speed = 1.0
+        self.alien_drop_speed = 10
+        # 设置外星人向左右移动的标志（1为向右移动，-1为向左移动）
+        self.fleet_direction = 1

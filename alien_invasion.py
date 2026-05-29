@@ -38,11 +38,29 @@ class AlienInvasion:
             # 更新子弹精灵组中子弹位置并删除飞出屏幕的子弹
             self._update_bullets()
             # 更新外星人位置
-            self.aliens.update()
+            self._update_aliens()
             # 刷新屏幕
             self._update_screen()
             # 设置刷新率
             self.clock.tick(60)
+
+    def _check_fleet_edges(self):
+        """在外星人到达屏幕边缘时调用_change_fleet_direction()方法（向下移动舰队并反转移动标志）"""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """将舰队向下移动并反转移动方向"""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.alien_drop_speed
+        self.settings.fleet_direction *= -1
+
+    def _update_aliens(self):
+        """更新外星人位置"""
+        self._check_fleet_edges()
+        self.aliens.update()
 
     def _create_fleet(self):
         """创建外星人舰队的辅助方法"""
